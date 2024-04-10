@@ -5,10 +5,14 @@ import { Command } from '@tauri-apps/plugin-shell';
 const greetMsg = ref("");
 const name = ref("");
 
+const loading = ref(false)
+
 async function run() {
+  loading.value = true
   const res = await Command
     .create('powershell', 'Get-ItemProperty -Path HKLM:\\SOFTWARE\\WOW6432Node\\Valve\\Steam -Name "InstallPath"')
     .execute()
+  loading.value = false
     
   greetMsg.value = res.stdout
 }
@@ -17,7 +21,7 @@ async function run() {
 <template>
   <form class="row" @submit.prevent="run">
     <input id="greet-input" v-model="name" placeholder="Enter a name..." />
-    <button type="submit">Greet</button>
+    <button type="submit">{{loading ? 'Loading...' :'Greet'}}</button>
   </form>
 
   <p>{{ greetMsg }}</p>
