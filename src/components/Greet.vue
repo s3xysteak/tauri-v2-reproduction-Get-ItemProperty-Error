@@ -10,7 +10,7 @@ const loading = ref(false)
 async function run() {
   loading.value = true
   const res = await Command
-    .create('powershell', 'Get-ItemProperty -Path HKLM:\\SOFTWARE\\WOW6432Node\\Valve\\Steam -Name "InstallPath"')
+    .create('powershell', 'Get-ItemProperty -Path HKLM:\\SOFTWARE\\GitForWindows -Name "InstallPath"')
     .execute()
   loading.value = false
     
